@@ -1,28 +1,26 @@
-var webpack = require('webpack'); // eslint-disable-line
+const path = require('path');
+const webpack = require('webpack'); // eslint-disable-line
 
-var env = process.env.NODE_ENV;   // eslint-disable-line
-var filename = 'ethjs';      // eslint-disable-line
-var library = 'Eth';          // eslint-disable-line
-var config = {                    // eslint-disable-line
+const env = process.env.NODE_ENV;   // eslint-disable-line
+const filename = 'ethjs';      // eslint-disable-line
+const library = 'Eth';          // eslint-disable-line
+const config = {                    // eslint-disable-line
   entry: [
     './lib/index.js',
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ['babel-loader'],
+        loader: 'babel-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.json$/,
-        loader: 'json',
       },
     ],
   },
+  mode: env,
   devtool: 'cheap-module-source-map',
   output: {
-    path: 'dist',
+    path: path.join(process.cwd(), 'dist'),
     filename: filename + '.js',       // eslint-disable-line
     library: library,                 // eslint-disable-line
     libraryTarget: 'umd',
@@ -40,23 +38,10 @@ var config = {                    // eslint-disable-line
 
 if (env === 'production') {
   config.output.filename = filename + '.min.js'; // eslint-disable-line
-  config.plugins
-  .push(new webpack.optimize.UglifyJsPlugin({
-    compressor: {
-      pure_getters: true,
-      unsafe: true,
-      unsafe_comps: true,
-      warnings: false,
-      screw_ie8: false,
-    },
-    mangle: {
-      screw_ie8: false,
-    },
-    output: {
-      screw_ie8: false,
-    },
-  }));
-  config.plugins.push(new webpack.optimize.DedupePlugin());
+
+  config.optimization = {
+    minimize: true,
+  };
 }
 
 

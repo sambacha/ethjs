@@ -1,5 +1,6 @@
-const assert = require('chai').assert;
-const TestRPC = require('ethereumjs-testrpc');
+const { assert } = require('chai'); // eslint-disable-line import/no-extraneous-dependencies
+const TestRPC = require('ganache-cli'); // eslint-disable-line import/no-extraneous-dependencies
+
 const provider = TestRPC.provider();
 const Eth = require('../index.js');
 

@@ -1,4 +1,4 @@
-module.exports = eth => (txHash, callback) => {
+module.exports = (eth) => (txHash, callback) => {
   let count = 0;
 
   const timeout = eth.options.timeout || 800000;
@@ -29,7 +29,7 @@ module.exports = eth => (txHash, callback) => {
   });
 
   if (callback) {
-    prom.then(res => callback(null, res)).catch(err => callback(err, null));
+    prom.then((res) => callback(null, res)).catch((err) => callback(err, null));
   }
 
   return callback ? null : prom;
